@@ -37,8 +37,8 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     @Transactional // <4>
-    public Book save(@NotBlank String name, @NotBlank String isbn, Genre genre) {
-        Book book = new Book(name, isbn, genre);
+    public Book save(@NotBlank String name, @NotBlank String isbn, @NotBlank Long genreId) {
+        Book book = new Book(name, isbn, entityManager.find(Genre.class, genreId));
         entityManager.persist(book);
         return book;
     }
@@ -73,8 +73,8 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     @Transactional // <4>
-    public Book saveWithException(@NotBlank String name, @NotBlank String isbn, Genre genre) {
-        save(name, isbn, genre);
+    public Book saveWithException(@NotBlank String name, @NotBlank String isbn, @NotBlank Long genreId) {
+        save(name, isbn, genreId);
         throw new PersistenceException();
     }
 }

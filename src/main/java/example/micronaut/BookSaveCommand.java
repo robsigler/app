@@ -1,6 +1,5 @@
 package example.micronaut;
 
-import example.micronaut.domain.Genre;
 import io.micronaut.serde.annotation.Serdeable;
 
 import javax.validation.constraints.NotBlank;
@@ -15,12 +14,12 @@ public class BookSaveCommand {
     private String isbn;
 
     @NotBlank
-    private Genre genre;
+    private Long genreId;
 
-    public BookSaveCommand(String name, String isbn, Genre genre) {
+    public BookSaveCommand(String name, String isbn, Long genreId) {
         this.name = name;
         this.isbn = isbn;
-        this.genre = genre;
+        this.genreId = genreId;
     }
 
     public String getName() {
@@ -39,11 +38,11 @@ public class BookSaveCommand {
         this.isbn = isbn;
     }
 
-    public Genre getGenre() {
-        return genre;
+    public Long getGenreId() {
+        return genreId;
     }
 
-    public void setGenre(Genre genre) {
-        this.genre = genre;
+    public void setGenreId(Long genreId) {
+        this.genreId = genreId;
     }
 }

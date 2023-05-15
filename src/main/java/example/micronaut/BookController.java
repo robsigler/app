@@ -52,7 +52,7 @@ class BookController {
 
     @Post // <10>
     HttpResponse<Book> save(@Body @Valid BookSaveCommand cmd) {
-        Book book = bookRepository.save(cmd.getName(), cmd.getIsbn(), cmd.getGenre());
+        Book book = bookRepository.save(cmd.getName(), cmd.getIsbn(), cmd.getGenreId());
 
         return HttpResponse
                 .created(book)
@@ -62,7 +62,7 @@ class BookController {
     @Post("/ex") // <11>
     HttpResponse<Book> saveExceptions(@Body @Valid BookSaveCommand cmd) {
         try {
-            Book book = bookRepository.saveWithException(cmd.getName(), cmd.getIsbn(), cmd.getGenre());
+            Book book = bookRepository.saveWithException(cmd.getName(), cmd.getIsbn(), cmd.getGenreId());
             return HttpResponse
                     .created(book)
                     .headers(headers -> headers.location(location(book.getId())));
