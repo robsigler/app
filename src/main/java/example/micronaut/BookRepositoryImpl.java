@@ -69,7 +69,7 @@ public class BookRepositoryImpl implements BookRepository {
                         + " isbn = :isbn, genre_id = :genre_id"
                         + " where id = :id")
                 .setParameter("name", name)
-                .setParameter("isbn", name)
+                .setParameter("isbn", isbn)
                 .setParameter("genre_id", genreId)
                 .setParameter("id", id)
                 .executeUpdate();
