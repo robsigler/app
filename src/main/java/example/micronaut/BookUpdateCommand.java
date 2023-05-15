@@ -7,6 +7,8 @@ import javax.validation.constraints.NotBlank;
 
 @Serdeable // <1>
 public class BookUpdateCommand {
+    @NotBlank
+    private Long id;
 
     @NotBlank
     private String name;
@@ -15,12 +17,21 @@ public class BookUpdateCommand {
     private String isbn;
 
     @NotBlank
-    private Genre genre;
+    private Long genreId;
 
-    public BookUpdateCommand(String name, String isbn, Genre genre) {
+    public BookUpdateCommand(Long id, String name, String isbn, Long genreId) {
+        this.id = id;
         this.name = name;
         this.isbn = isbn;
-        this.genre = genre;
+        this.genreId = genreId;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -39,11 +50,11 @@ public class BookUpdateCommand {
         this.isbn = isbn;
     }
 
-    public Genre getGenre() {
-        return genre;
+    public Long getGenreId() {
+        return genreId;
     }
 
-    public void setGenre(Genre genre) {
-        this.genre = genre;
+    public void setGenreId(Long genreId) {
+        this.genreId = genreId;
     }
 }

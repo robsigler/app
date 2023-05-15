@@ -19,5 +19,5 @@ public interface BookRepository {
 
     List<Book> findAll(@NotNull SortingAndOrderArguments args);
 
-    int update(long id, @NotBlank String name);
+    int update(long id, @NotBlank String name, @NotBlank String isbn, @NotBlank Long genreId);
 }

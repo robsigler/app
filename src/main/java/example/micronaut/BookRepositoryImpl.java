@@ -64,9 +64,13 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     @Transactional // <4>
-    public int update(long id, @NotBlank String name) {
-        return entityManager.createQuery("UPDATE Book b SET name = :name where id = :id")
+    public int update(long id, @NotBlank String name, @NotBlank String isbn, @NotBlank Long genreId) {
+        return entityManager.createQuery("UPDATE Book b SET name = :name,"
+                        + " isbn = :isbn, genre_id = :genre_id"
+                        + " where id = :id")
                 .setParameter("name", name)
+                .setParameter("isbn", name)
+                .setParameter("genre_id", genreId)
                 .setParameter("id", id)
                 .executeUpdate();
     }

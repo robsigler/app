@@ -37,8 +37,8 @@ class BookController {
     }
 
     @Put // <6>
-    HttpResponse<?> update(@Body @Valid GenreUpdateCommand command) { // <7>
-        int numberOfEntitiesUpdated = bookRepository.update(command.getId(), command.getName());
+    HttpResponse<?> update(@Body @Valid BookUpdateCommand command) { // <7>
+        int numberOfEntitiesUpdated = bookRepository.update(command.getId(), command.getName(), command.getIsbn(), command.getGenreId());
 
         return HttpResponse
                 .noContent()
