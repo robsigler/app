@@ -52,4 +52,4 @@ jobs:
 
       - name: Deploy
         run: |
-          curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}&ref=${{ env.DOCKER_TAG }}
+          curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }} --data-urlencode "imgURL=${{ env.DOCKER_TAG }}"
