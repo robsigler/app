@@ -1,5 +1,5 @@
 package example.micronaut;
 
 public interface ApplicationConfiguration {
-    int getMax();
+  int getMax();
 }

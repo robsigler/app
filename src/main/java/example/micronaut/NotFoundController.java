@@ -9,32 +9,27 @@ import io.micronaut.http.annotation.Error;
 import io.micronaut.http.hateoas.JsonError;
 import io.micronaut.http.hateoas.Link;
 import io.micronaut.views.ViewsRenderer;
-
 import java.util.Collections;
 
-@Controller("/notfound") 
+@Controller("/notfound")
 public class NotFoundController {
 
-    private final ViewsRenderer viewsRenderer;
+  private final ViewsRenderer viewsRenderer;
 
-    public NotFoundController(ViewsRenderer viewsRenderer) { 
-        this.viewsRenderer = viewsRenderer;
+  public NotFoundController(ViewsRenderer viewsRenderer) {
+    this.viewsRenderer = viewsRenderer;
+  }
+
+  @Error(status = HttpStatus.NOT_FOUND, global = true)
+  public HttpResponse notFound(HttpRequest request) {
+    if (request.getHeaders().accept().stream()
+        .anyMatch(mediaType -> mediaType.getName().contains(MediaType.TEXT_HTML))) {
+      return HttpResponse.ok(viewsRenderer.render("notFound", Collections.emptyMap(), request))
+          .contentType(MediaType.TEXT_HTML);
     }
 
-    @Error(status = HttpStatus.NOT_FOUND, global = true)  
-    public HttpResponse notFound(HttpRequest request) {
-        if (request.getHeaders()
-                .accept()
-                .stream()
-                .anyMatch(mediaType -> mediaType.getName().contains(MediaType.TEXT_HTML))) { 
-            return HttpResponse.ok(viewsRenderer.render("notFound", Collections.emptyMap(), request))
-                    .contentType(MediaType.TEXT_HTML);
-        }
+    JsonError error = new JsonError("Page Not Found").link(Link.SELF, Link.of(request.getUri()));
 
-        JsonError error = new JsonError("Page Not Found")
-                .link(Link.SELF, Link.of(request.getUri()));
-
-        return HttpResponse.<JsonError>notFound()
-                .body(error); 
-    }
+    return HttpResponse.<JsonError>notFound().body(error);
+  }
 }

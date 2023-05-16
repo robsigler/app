@@ -8,8 +8,8 @@ import io.micronaut.scheduling.annotation.ExecuteOn;
 @Controller("/health")
 class HealthController {
 
-    @Get("/")
-    String get() {
-        return "200";
-    }
+  @Get("/")
+  String get() {
+    return "200";
+  }
 }
