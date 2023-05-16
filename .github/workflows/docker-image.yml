@@ -18,9 +18,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      
+      - name: Get date
+        run: echo "DATE=$(date +%s)" >> $GITHUB_ENV
 
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$(date +%s)
+        run: docker build . --file Dockerfile --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$DATE
 
       - name: Log in to the Container registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
@@ -40,5 +43,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ env.DATE }}
           labels: ${{ steps.meta.outputs.labels }}
