@@ -19,6 +19,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Verify formatting
+        run: ./gradlew spotlessCheck
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
