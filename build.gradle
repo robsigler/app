@@ -1,3 +1,9 @@
+buildscript {
+    configurations.classpath {
+        resolutionStrategy.activateDependencyLocking()
+    }
+}
+
 plugins {
     id("com.diffplug.spotless") version '6.18.0'
     id("com.github.johnrengelman.shadow") version "7.1.2"
@@ -55,12 +61,14 @@ micronaut {
     }
 }
 
-
-
 configurations.all {
+    resolutionStrategy.activateDependencyLocking()
     resolutionStrategy.dependencySubstitution {
         substitute(module("io.micronaut:micronaut-jackson-databind"))
             .using(module("io.micronaut.serde:micronaut-serde-jackson:1.5.2"))
     }
 }
 
+dependencyLocking {
+  lockAllConfigurations()
+}
