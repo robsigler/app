@@ -18,24 +18,24 @@ public class GenreRepositoryImpl implements GenreRepository {
 
   private static final List<String> VALID_PROPERTY_NAMES = Arrays.asList("id", "name");
 
-  private final EntityManager entityManager; // <2>
+  private final EntityManager entityManager;
   private final ApplicationConfiguration applicationConfiguration;
 
   public GenreRepositoryImpl(
-      EntityManager entityManager, // <2>
+      EntityManager entityManager,
       ApplicationConfiguration applicationConfiguration) {
     this.entityManager = entityManager;
     this.applicationConfiguration = applicationConfiguration;
   }
 
   @Override
-  @ReadOnly // <3>
+  @ReadOnly
   public Optional<Genre> findById(long id) {
     return Optional.ofNullable(entityManager.find(Genre.class, id));
   }
 
   @Override
-  @Transactional // <4>
+  @Transactional
   public Genre save(@NotBlank String name) {
     Genre genre = new Genre(name);
     entityManager.persist(genre);
@@ -43,12 +43,12 @@ public class GenreRepositoryImpl implements GenreRepository {
   }
 
   @Override
-  @Transactional // <4>
+  @Transactional
   public void deleteById(long id) {
     findById(id).ifPresent(entityManager::remove);
   }
 
-  @ReadOnly // <3>
+  @ReadOnly
   public List<Genre> findAll(@NotNull SortingAndOrderArguments args) {
     String qlString = "SELECT g FROM Genre as g";
     if (args.getOrder().isPresent()
@@ -64,7 +64,7 @@ public class GenreRepositoryImpl implements GenreRepository {
   }
 
   @Override
-  @Transactional // <4>
+  @Transactional
   public int update(long id, @NotBlank String name) {
     return entityManager
         .createQuery("UPDATE Genre g SET name = :name where id = :id")
@@ -74,7 +74,7 @@ public class GenreRepositoryImpl implements GenreRepository {
   }
 
   @Override
-  @Transactional // <4>
+  @Transactional
   public Genre saveWithException(@NotBlank String name) {
     save(name);
     throw new PersistenceException();

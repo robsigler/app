@@ -17,34 +17,34 @@ import java.util.List;
 import javax.persistence.PersistenceException;
 import javax.validation.Valid;
 
-@ExecuteOn(TaskExecutors.IO) // <1>
-@Controller("/genres") // <2>
+@ExecuteOn(TaskExecutors.IO)
+@Controller("/genres")
 class GenreController {
 
   private final GenreRepository genreRepository;
 
-  GenreController(GenreRepository genreRepository) { // <3>
+  GenreController(GenreRepository genreRepository) {
     this.genreRepository = genreRepository;
   }
 
-  @Get("/{id}") // <4>
+  @Get("/{id}")
   Genre show(Long id) {
-    return genreRepository.findById(id).orElse(null); // <5>
+    return genreRepository.findById(id).orElse(null);
   }
 
   @Put // <6>
-  HttpResponse<?> update(@Body @Valid GenreUpdateCommand command) { // <7>
+  HttpResponse<?> update(@Body @Valid GenreUpdateCommand command) {
     int numberOfEntitiesUpdated = genreRepository.update(command.getId(), command.getName());
 
-    return HttpResponse.noContent().header(LOCATION, location(command.getId()).getPath()); // <8>
+    return HttpResponse.noContent().header(LOCATION, location(command.getId()).getPath());
   }
 
-  @Get(value = "/list{?args*}") // <9>
+  @Get(value = "/list{?args*}")
   List<Genre> list(@Valid SortingAndOrderArguments args) {
     return genreRepository.findAll(args);
   }
 
-  @Post // <10>
+  @Post
   HttpResponse<Genre> save(@Body @Valid GenreSaveCommand cmd) {
     Genre genre = genreRepository.save(cmd.getName());
 
@@ -52,7 +52,7 @@ class GenreController {
         .headers(headers -> headers.location(location(genre.getId())));
   }
 
-  @Post("/ex") // <11>
+  @Post("/ex")
   HttpResponse<Genre> saveExceptions(@Body @Valid GenreSaveCommand cmd) {
     try {
       Genre genre = genreRepository.saveWithException(cmd.getName());
@@ -63,7 +63,7 @@ class GenreController {
     }
   }
 
-  @Delete("/{id}") // <12>
+  @Delete("/{id}")
   HttpResponse<?> delete(Long id) {
     genreRepository.deleteById(id);
     return HttpResponse.noContent();

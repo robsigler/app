@@ -22,19 +22,19 @@ import java.util.Map;
 import javax.persistence.PersistenceException;
 import javax.validation.Valid;
 
-@ExecuteOn(TaskExecutors.IO) // <1>
-@Controller("/books") // <2>
+@ExecuteOn(TaskExecutors.IO)
+@Controller("/books")
 class BookController {
 
   private final BookRepository bookRepository;
 
-  BookController(BookRepository bookRepository) { // <3>
+  BookController(BookRepository bookRepository) {
     this.bookRepository = bookRepository;
   }
 
-  @Get("/{id}") // <4>
+  @Get("/{id}")
   Book show(Long id) {
-    return bookRepository.findById(id).orElse(null); // <5>
+    return bookRepository.findById(id).orElse(null);
   }
 
   @View("bookscreate")
