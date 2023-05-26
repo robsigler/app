@@ -16,8 +16,8 @@
     <fieldset>
         <ol>
             <li>
-                <label for="title">Title</label>
-                <input type="text" id="title" name="title" value="$title"/>
+                <label for="title">Name</label>
+                <input type="text" id="name" name="name" value="$name"/>
             </li>
             <li>
                 <label for="isbn">ISBN</label>

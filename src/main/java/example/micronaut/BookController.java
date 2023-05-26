@@ -45,28 +45,28 @@ class BookController {
 
   private Map<String, Object> createModelWithBlankValues() {
     final Map<String, Object> model = new HashMap<>();
-    model.put("title", "");
+    model.put("name", "");
     model.put("isbn", "");
     model.put("genreId", "");
     return model;
   }
 
-  @Put // <6>
-  HttpResponse<?> update(@Body @Valid BookUpdateCommand command) { // <7>
+  @Put("/save")
+  HttpResponse<?> update(@Body @Valid BookUpdateCommand command) {
     int numberOfEntitiesUpdated =
         bookRepository.update(
             command.getId(), command.getName(), command.getIsbn(), command.getGenreId());
 
-    return HttpResponse.noContent().header(LOCATION, location(command.getId()).getPath()); // <8>
+    return HttpResponse.noContent().header(LOCATION, location(command.getId()).getPath());
   }
 
-  @Get(value = "/list{?args*}") // <9>
+  @Get(value = "/list{?args*}")
   List<Book> list(@Valid SortingAndOrderArguments args) {
     return bookRepository.findAll(args);
   }
 
   @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-  @Post()
+  @Post("/save")
   HttpResponse<Book> save(@Body @Valid BookSaveCommand cmd) {
     Book book = bookRepository.save(cmd.getName(), cmd.getIsbn(), cmd.getGenreId());
 
