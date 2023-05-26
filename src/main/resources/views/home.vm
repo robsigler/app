@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <style type="text/css">
+        form fieldset li {
+            list-style-type: none;
+        }
+        #errors span { color: red; }
+    </style>
+</head>
+<body>
+<h1>Home</h1>
+<ul>
+    <a href="/books/create">Create New Book</a>
+    <a href="/books/list">List Books</a>
+</ul>
+#if( $errors )
+    <ul id="errors">
+        #foreach( $error in $errors )
+            <li><span>$error</span></li>
+        #end
+    </ul>
+#end
+</body>
+</html>
