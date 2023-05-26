@@ -28,4 +28,4 @@
 
 - [Micronaut Hibernate JPA documentation](https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#hibernate)
 
-
+Hello world!
